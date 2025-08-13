@@ -1,4 +1,4 @@
-import {FC} from "react";
+import { FC } from "react";
 import {
   NavigationContainer,
   NavigatorScreenParams,
@@ -17,7 +17,9 @@ const Root = createNativeStackNavigator<RootStackParamList>();
 const RootNavigator: FC = () => {
   return (
     <NavigationContainer ref={navigationRef}>
-      <Root.Screen name={MainStackRoutes.MainStack} component={MainStack} />
+      <Root.Navigator screenOptions={{ headerShown: false }}>
+        <Root.Screen name={MainStackRoutes.MainStack} component={MainStack} />
+      </Root.Navigator>
     </NavigationContainer>
   );
 };

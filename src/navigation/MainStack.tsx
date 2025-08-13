@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator<MainStackParamList>();
 const MainStack: React.FC = () => {
   const colors = useThemeColors();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName={MainStackRoutes.HomeStack}>
       <Stack.Screen
         name={MainStackRoutes.HomeStack}
         component={HomeScreen}
@@ -21,6 +21,7 @@ const MainStack: React.FC = () => {
           headerShown: true,
           headerShadowVisible: false,
           headerBackVisible: false,
+          headerTitle: "",
           headerStyle: {
             elevation: 0,
             shadowOpacity: 0,
