@@ -75,7 +75,7 @@ const NewsCart: FC<Props> = ({ article, index }) => {
             <InterText
               weight={InterWeightEnum.SemiBold}
               style={styles.sourceText}
-              numberOfLines={2}
+              numberOfLines={1}
               ellipsizeMode="tail"
             >
               {article.source.name}
@@ -83,8 +83,8 @@ const NewsCart: FC<Props> = ({ article, index }) => {
             <View style={styles.timeInfo}>
               <ClockIcon width={14} height={14} color={colors.mainTextColor} />
               <InterText
-                style={styles.sourceText}
-                numberOfLines={2}
+                style={styles.timeText}
+                numberOfLines={1}
                 ellipsizeMode="tail"
               >
                 {timeAgoFromString(article.publishedAt)}
@@ -120,6 +120,10 @@ function createStyles(colors: typeof lightColors) {
       fontSize: 16,
     },
     sourceText: {
+      fontSize: 14,
+      maxWidth: "50%",
+    },
+    timeText: {
       fontSize: 14,
     },
     newsInfo: {
