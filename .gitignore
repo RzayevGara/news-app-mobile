@@ -1,0 +1,79 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env
+#.env
+#.env.*
+
+# React Native / Metro
+metro-cache/
+
+# Android
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+android/app/*.keystore
+android/app/.cxx/
+android/.cxx/
+
+# iOS
+ios/Pods/
+ios/Podfile.lock
+ios/build/
+ios/*.xcworkspace
+ios/*/xcuserdata/
+*.xcuserstate
+DerivedData/
+
+# CocoaPods Artifact
+Podfile.lock
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+
+# Xcode
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.iml
+
+# Logs & Coverage
+coverage/
+*.log
+
+# Buck
+buck-out/
+\.buckd/
+
+# Crashlytics
+crashlytics-build.properties
+
+# Misc temp
+*.temp
+*.tmp
+*.swp
+
+# Build artifacts
+*.apk
+*.aab
+*.ipa
+
+# Vendor
+vendor/
