@@ -1,4 +1,7 @@
+import { NewsType } from "@/utils/enums/app.enum.ts";
+
 export type Article = {
+  type: NewsType;
   author: string;
   title: string;
   description: string | null;

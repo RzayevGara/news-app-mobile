@@ -30,7 +30,7 @@ const Dot: React.FC<DotProps> = ({ index, progress }) => {
   const innerStyle = useAnimatedStyle(() => {
     const isActive = Math.abs(progress - index) < 0.5;
     return {
-      backgroundColor: isActive ? colors.blue500 : colors.grey700,
+      backgroundColor: isActive ? colors.blue500 : colors.grey100,
       transform: [{ scale: withTiming(1, { duration: 200 }) }],
     };
   }, [progress, colors]);
@@ -63,7 +63,7 @@ function getStyles(colors: typeof lightColors) {
       width: 8,
       height: 8,
       borderRadius: 100,
-      backgroundColor: colors.grey700,
+      backgroundColor: colors.grey100,
     },
   });
 }

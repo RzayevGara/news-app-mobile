@@ -15,11 +15,31 @@ export default function NewsCard({ item }: { item: Article }) {
 
   return (
     <View style={styles.container}>
-      <FastImage
-        style={styles.image}
-        source={{ uri: item.urlToImage, priority: FastImage.priority.normal }}
-        resizeMode={FastImage.resizeMode.cover}
-      />
+      {item?.urlToImage ? (
+        <FastImage
+          style={styles.image}
+          source={{ uri: item.urlToImage, priority: FastImage.priority.normal }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      ) : (
+        <View
+          style={[
+            styles.image,
+            {
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: colors.grey200,
+            },
+          ]}
+        >
+          <InterText
+            weight={InterWeightEnum.Medium}
+            style={{ fontSize: 18, color: colors.mainTextColor }}
+          >
+            No Image Available
+          </InterText>
+        </View>
+      )}
       <View style={styles.textWrapper}>
         {item?.author && (
           <InterText style={styles.authorText}>{item.author}</InterText>

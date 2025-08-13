@@ -27,7 +27,6 @@ const TrendingSlider: FC<Props> = ({ isLoading }) => {
         data={trends}
         isLoading={isLoading}
         renderItem={renderNewsItem}
-        // onItemChange={(newActive) => setActiveItem(newActive)}
       />
     </View>
   );

@@ -154,12 +154,6 @@ function createStyles(colors: typeof lightColors) {
       backgroundColor: colors.background,
       borderRadius: 12,
     },
-    emptyCardWrapper: {
-      width: CARD_WIDTH,
-      height: CARD_HEIGHT,
-      justifyContent: "center",
-      alignItems: "center",
-    },
   });
 }
 

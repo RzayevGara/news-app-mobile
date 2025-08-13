@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import NetInfo from "@react-native-community/netinfo";
-import { getTrend } from "@/services/news";
+import { getNews } from "@/services/news";
 import { useNews } from "@/store/useNews";
 
 export function useTrendingNews() {
@@ -18,7 +18,7 @@ export function useTrendingNews() {
         const net = await NetInfo.fetch();
         if (!net.isConnected) return;
 
-        const res = await getTrend();
+        const res = await getNews({ page: 1, pageSize: 10 });
         if (!mountedRef.current) return;
         setTrends(res.articles);
       } finally {
