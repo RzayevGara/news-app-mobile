@@ -59,7 +59,7 @@ function createStyles(colors: typeof lightColors) {
       fontSize: 16,
       paddingVertical: 10,
     },
-    catScrollContent: { marginTop: 12, gap: 8, paddingHorizontal: 6 },
+    catScrollContent: { marginTop: 12, gap: 15, paddingHorizontal: 6 },
     chip: { color: colors.secondTextColor },
     chipActive: {
       color: colors.mainTextColor,
