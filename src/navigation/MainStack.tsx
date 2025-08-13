@@ -8,8 +8,8 @@ import { InterWeightEnum } from "@/utils/enums/font.ts";
 import BookmarkIcon from "@/assets/icons/bookmark.svg";
 import DarkModeIcon from "@/assets/icons/dark-mode.svg";
 import LightModeIcon from "@/assets/icons/light-mode.svg";
-import { TouchableOpacity, View, Appearance } from "react-native";
-import { useIsDark } from "@/hooks/useIsDark.ts";
+import { TouchableOpacity, View } from "react-native";
+import { useTheme } from "@/store/useTheme.ts";
 
 export type MainStackParamList = {
   [MainStackRoutes.HomeStack]: undefined;
@@ -18,12 +18,10 @@ export type MainStackParamList = {
 const Stack = createNativeStackNavigator<MainStackParamList>();
 
 const MainStack: React.FC = () => {
-  const colors = useThemeColors();
-  const isDark = useIsDark();
+  const toggleTheme = useTheme((state) => state.toggleTheme);
+  const theme = useTheme((state) => state.theme);
 
-  const changeAppearanceMode = () => {
-    Appearance.setColorScheme(isDark ? "light" : "dark");
-  };
+  const colors = useThemeColors();
 
   return (
     <Stack.Navigator initialRouteName={MainStackRoutes.HomeStack}>
@@ -45,8 +43,8 @@ const MainStack: React.FC = () => {
               style={{ flexDirection: "row", alignItems: "center", gap: 15 }}
             >
               <BookmarkIcon color={colors.mainTextColor} />
-              <TouchableOpacity onPress={changeAppearanceMode}>
-                {isDark ? (
+              <TouchableOpacity onPress={toggleTheme}>
+                {theme === "dark" ? (
                   <DarkModeIcon width={22} height={22} />
                 ) : (
                   <LightModeIcon width={22} height={22} />
