@@ -37,10 +37,5 @@ export function useTrendingNews() {
     };
   }, [fetchTrends]);
 
-  const onRefresh = useCallback(
-    () => fetchTrends({ refreshing: true }),
-    [fetchTrends]
-  );
-
-  return { isLoading, isRefreshing, onRefresh };
+  return { isLoading, isRefreshing, fetchTrends };
 }

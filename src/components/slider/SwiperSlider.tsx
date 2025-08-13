@@ -21,7 +21,6 @@ import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width - 32;
-const CARD_HEIGHT = 370;
 
 interface SwiperSliderProps {
   data: Article[];

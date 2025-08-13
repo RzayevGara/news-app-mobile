@@ -1,24 +1,32 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Article } from "@/utils/types/app.ts";
+import React, { FC } from "react";
+import { useThemeColors } from "@/theme";
+import { lightColors } from "@/theme/colors.ts";
 import FastImage from "@d11/react-native-fast-image";
 import InterText from "@/components/texts/InterText.tsx";
-import { useThemeColors } from "@/theme";
 import { InterWeightEnum } from "@/utils/enums/font.ts";
-import { lightColors } from "@/theme/colors.ts";
 import ClockIcon from "@/assets/icons/clock.svg";
 import { timeAgoFromString } from "@/utils/helper.ts";
 
-export default function NewsCard({ item }: { item: Article }) {
+type Props = {
+  article: Article;
+  index: number;
+};
+
+const NewsCart: FC<Props> = ({ article, index }) => {
   const colors = useThemeColors();
   const styles = createStyles(colors);
 
   return (
-    <View style={styles.container}>
-      {item?.urlToImage ? (
+    <View style={[styles.container, index > 1 && { marginTop: 16 }]}>
+      {article?.urlToImage ? (
         <FastImage
           style={styles.image}
-          source={{ uri: item.urlToImage, priority: FastImage.priority.normal }}
+          source={{
+            uri: article.urlToImage,
+            priority: FastImage.priority.normal,
+          }}
           resizeMode={FastImage.resizeMode.cover}
         />
       ) : (
@@ -34,67 +42,81 @@ export default function NewsCard({ item }: { item: Article }) {
         >
           <InterText
             weight={InterWeightEnum.Medium}
-            style={{ fontSize: 18, color: colors.mainTextColor }}
+            style={{
+              fontSize: 14,
+              color: colors.mainTextColor,
+              textAlign: "center",
+              lineHeight: 20,
+            }}
           >
             No Image Available
           </InterText>
         </View>
       )}
-      <View style={styles.textWrapper}>
-        {item?.author && (
-          <InterText style={styles.authorText}>{item.author}</InterText>
-        )}
-        <InterText
-          weight={InterWeightEnum.Medium}
-          style={styles.titleText}
-          numberOfLines={2}
-          ellipsizeMode="tail"
-        >
-          {item.title}
-        </InterText>
-        <View style={styles.newsInfo}>
+      <View style={{ flexShrink: 1 }}>
+        {article?.author && (
           <InterText
-            weight={InterWeightEnum.Bold}
-            style={styles.sourceText}
+            style={styles.authorText}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {article.author}
+          </InterText>
+        )}
+        <View style={{ justifyContent: "space-between", flex: 1 }}>
+          <InterText
+            style={styles.titleText}
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            {item.source.name}
+            {article.title}
           </InterText>
-          <View style={styles.timeInfo}>
-            <ClockIcon width={14} height={14} color={colors.mainTextColor} />
+          <View style={styles.newsInfo}>
             <InterText
+              weight={InterWeightEnum.SemiBold}
               style={styles.sourceText}
               numberOfLines={2}
               ellipsizeMode="tail"
             >
-              {timeAgoFromString(item.publishedAt)}
+              {article.source.name}
             </InterText>
+            <View style={styles.timeInfo}>
+              <ClockIcon width={14} height={14} color={colors.mainTextColor} />
+              <InterText
+                style={styles.sourceText}
+                numberOfLines={2}
+                ellipsizeMode="tail"
+              >
+                {timeAgoFromString(article.publishedAt)}
+              </InterText>
+            </View>
           </View>
         </View>
       </View>
     </View>
   );
-}
+};
+
+export default NewsCart;
 
 function createStyles(colors: typeof lightColors) {
   return StyleSheet.create({
     container: {
-      marginTop: 16,
+      flexDirection: "row",
+      padding: 8,
+      gap: 8,
     },
     image: {
-      width: "100%",
-      height: 180,
+      width: 96,
+      height: 96,
       borderRadius: 8,
     },
     authorText: {
       color: colors.secondTextColor,
-    },
-    textWrapper: {
-      marginTop: 10,
+      marginTop: 4,
     },
     titleText: {
-      marginTop: 8,
+      marginTop: 6,
       fontSize: 16,
     },
     sourceText: {

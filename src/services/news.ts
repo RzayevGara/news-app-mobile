@@ -22,11 +22,18 @@ export async function getNews(opts: {
   category?: NewsCategory;
   page?: number;
   pageSize?: number;
+  controller?: AbortController;
 }): Promise<{ articles: Article[]; totalResults: number }> {
-  const { category, page = 1, pageSize = 20 } = opts;
+  const { category, page = 1, pageSize = 20, controller } = opts;
 
   const { data } = await api().get("/top-headlines", {
-    params: { ...(category ? { category } : {}), page, pageSize },
+    params: {
+      ...(category ? { category } : {}),
+      page,
+      pageSize,
+      country: "us",
+    },
+    signal: controller?.signal,
   });
   return data;
 }

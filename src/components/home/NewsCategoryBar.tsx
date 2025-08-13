@@ -53,7 +53,7 @@ export default NewsCategoryBar;
 
 function createStyles(colors: typeof lightColors) {
   return StyleSheet.create({
-    sticky: {marginTop: 22},
+    sticky: { backgroundColor: colors.background, marginBottom: 16 },
     categoryText: {
       textTransform: "capitalize",
       fontSize: 16,

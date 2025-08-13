@@ -13,7 +13,7 @@ type State = {
   clear: () => void;
 };
 
-const initialNews: Article[] = [
+export const initialNews: Article[] = [
   {
     type: NewsType.category,
     author: "",
@@ -21,6 +21,7 @@ const initialNews: Article[] = [
     description: "",
     publishedAt: "",
     content: "",
+    url: "",
     source: { id: null, name: "" },
   },
 ];

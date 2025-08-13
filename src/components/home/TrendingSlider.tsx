@@ -3,7 +3,7 @@ import InterText from "@/components/texts/InterText.tsx";
 import { InterWeightEnum } from "@/utils/enums/font.ts";
 import { useNews } from "@/store/useNews.ts";
 import SwiperSlider from "@/components/slider/SwiperSlider.tsx";
-import NewsCard from "@/components/cards/NewsCard.tsx";
+import TrendSliderCart from "@/components/cards/TrendSliderCart.tsx";
 import { Article } from "@/utils/types/app.ts";
 import { FC } from "react";
 
@@ -15,11 +15,11 @@ const TrendingSlider: FC<Props> = ({ isLoading }) => {
   const trends = useNews((s) => s.trends);
 
   const renderNewsItem = (item: Article, index: number) => (
-    <NewsCard item={item} />
+    <TrendSliderCart item={item} />
   );
 
   return (
-    <View>
+    <View style={{ marginBottom: 22 }}>
       <InterText weight={InterWeightEnum.SemiBold} style={{ fontSize: 16 }}>
         Trending
       </InterText>
