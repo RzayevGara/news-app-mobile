@@ -34,7 +34,10 @@ export function useNewsList({ category, pageSize = 20 }: Params) {
 
       try {
         const net = await NetInfo.fetch();
-        if (!net.isConnected) return;
+        if (!net.isConnected) {
+          setHasMore(false);
+          return;
+        }
 
         const res = await getGuardianBySection({
           category,
@@ -68,10 +71,14 @@ export function useNewsList({ category, pageSize = 20 }: Params) {
 
   useEffect(() => {
     mountedRef.current = true;
+    controllerRef.current?.abort();
+
     setArticles(initialNews);
     setTotal(0);
     setPage(1);
     fetchPage(1);
+    setIsLoadingMore(true);
+
     return () => {
       mountedRef.current = false;
       controllerRef.current?.abort();
