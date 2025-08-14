@@ -9,8 +9,8 @@ export const lightColors = {
   skeletonBase: "#E1E9EE",
   skeletonHighlights: "#F2F8FC",
 
-  blue400: "#1877F2",
-  blue500: "#1A65B4",
+  blue100: "#1877F2",
+  blue200: "#1A65B4",
 
   white: "#fff"
 };
@@ -23,13 +23,11 @@ export const darkColors = {
   grey100: "#D5D5D5",
   grey200: "#a6a5a5",
 
-  skeletonBase: "#222426",
+  skeletonBase: "#35383b",
   skeletonHighlights: "#2A2D2F",
 
-  blue400: "#1877F2",
-  blue500: "#1A65B4",
+  blue100: "#1877F2",
+  blue200: "#1A65B4",
 
   white: "#fff"
-
-
 };

@@ -68,7 +68,7 @@ function createStyles(colors: typeof lightColors) {
     chip: { color: colors.secondTextColor },
     chipActive: {
       color: colors.mainTextColor,
-      borderColor: colors.blue400,
+      borderColor: colors.blue100,
       borderBottomWidth: 2,
     },
   });

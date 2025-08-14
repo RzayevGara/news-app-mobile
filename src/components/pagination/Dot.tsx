@@ -30,7 +30,7 @@ const Dot: React.FC<DotProps> = ({ index, progress }) => {
   const innerStyle = useAnimatedStyle(() => {
     const isActive = Math.abs(progress - index) < 0.5;
     return {
-      backgroundColor: isActive ? colors.blue500 : colors.grey100,
+      backgroundColor: isActive ? colors.blue200 : colors.grey100,
       transform: [{ scale: withTiming(1, { duration: 200 }) }],
     };
   }, [progress, colors]);
@@ -38,7 +38,7 @@ const Dot: React.FC<DotProps> = ({ index, progress }) => {
   return (
     <View style={styles.dotWrapper}>
       <Animated.View
-        style={[styles.outerRing, { borderColor: colors.blue500 }, outerStyle]}
+        style={[styles.outerRing, { borderColor: colors.blue200 }, outerStyle]}
       />
       <Animated.View style={[styles.dot, innerStyle]} />
     </View>

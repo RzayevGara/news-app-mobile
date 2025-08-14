@@ -91,7 +91,7 @@ const MainStack: React.FC = () => {
                         height: 18,
                         paddingHorizontal: 6,
                         borderRadius: 12,
-                        backgroundColor: colors.blue500,
+                        backgroundColor: colors.blue200,
                         justifyContent: "center",
                         alignItems: "center",
                         zIndex: 10,
