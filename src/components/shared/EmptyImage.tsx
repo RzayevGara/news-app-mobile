@@ -20,7 +20,7 @@ const EmptyImage: React.FC<EmptyImageProps> = ({ style, textStyle }) => {
           justifyContent: "center",
           backgroundColor: colors.grey200,
           width: "100%",
-          height: 180,
+          height: 200,
           borderRadius: 8,
         },
         style,
