@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Article } from "@/utils/types/app.ts";
 import FastImage from "@d11/react-native-fast-image";
@@ -14,11 +14,14 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import { MainStackRoutes } from "@/utils/enums/route-names.ts";
+import EmptyImage from "@/components/shared/EmptyImage.tsx";
 
 export default function TrendSliderCart({ item }: { item: Article }) {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const colors = useThemeColors();
   const styles = createStyles(colors);
+
+  const [imageError, setImageError] = useState(false);
 
   return (
     <TouchableOpacity
@@ -30,7 +33,7 @@ export default function TrendSliderCart({ item }: { item: Article }) {
       }
     >
       <View style={styles.container}>
-        {item?.fields?.thumbnail ? (
+        {item?.fields?.thumbnail && !imageError ? (
           <FastImage
             style={styles.image}
             source={{
@@ -38,25 +41,10 @@ export default function TrendSliderCart({ item }: { item: Article }) {
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.cover}
+            onError={() => setImageError(true)}
           />
         ) : (
-          <View
-            style={[
-              styles.image,
-              {
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: colors.grey200,
-              },
-            ]}
-          >
-            <InterText
-              weight={InterWeightEnum.Medium}
-              style={{ fontSize: 18, color: colors.mainTextColor }}
-            >
-              No Image Available
-            </InterText>
-          </View>
+          <EmptyImage />
         )}
         <View style={styles.textWrapper}>
           {item?.fields?.byline && (

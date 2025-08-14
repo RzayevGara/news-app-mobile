@@ -12,7 +12,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { MainStackParamList } from "@/navigation/MainStack.tsx";
 import { MainStackRoutes } from "@/utils/enums/route-names.ts";
 import { RootStackParamList } from "@/navigation/RootNavigator.tsx";
-import { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import InterText from "@/components/texts/InterText.tsx";
 import { lightColors } from "@/theme/colors.ts";
 import { useThemeColors } from "@/theme";
@@ -23,6 +23,7 @@ import BookmarkCheckedIcon from "@/assets/icons/bookmark-checked.svg";
 import FastImage from "@d11/react-native-fast-image";
 import RenderHTML from "react-native-render-html";
 import { useBookmarks } from "@/store/useBookmarks.ts";
+import EmptyImage from "@/components/shared/EmptyImage.tsx";
 
 type DetailProps = CompositeScreenProps<
   NativeStackScreenProps<MainStackParamList, MainStackRoutes.DetailStack>,
@@ -39,7 +40,8 @@ const DetailScreen: FC<DetailProps> = ({ route: { params } }) => {
   const addBookmark = useBookmarks((state) => state.addBookmark);
   const removeBookmark = useBookmarks((state) => state.removeBookmarkById);
 
-  const [ratio, setRatio] = useState(16 / 9);
+  const [ratio, setRatio] = useState(0);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     if (!article.fields?.thumbnail) return;
@@ -102,14 +104,19 @@ const DetailScreen: FC<DetailProps> = ({ route: { params } }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-        <FastImage
-          style={{ width: "100%", aspectRatio: ratio, borderRadius: 8 }}
-          source={{
-            uri: article?.fields?.thumbnail,
-            priority: FastImage.priority.high,
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
+        {article?.fields?.thumbnail && !imageError ? (
+          <FastImage
+            style={{ width: "100%", aspectRatio: ratio, borderRadius: 8 }}
+            source={{
+              uri: article.fields.thumbnail,
+              priority: FastImage.priority.high,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        ) : (
+          <EmptyImage />
+        )}
+
         <View style={{ marginTop: 16, gap: 10 }}>
           <InterText
             style={{ fontSize: 14, color: colors.secondTextColor }}

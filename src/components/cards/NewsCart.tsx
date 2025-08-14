@@ -1,6 +1,6 @@
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Article } from "@/utils/types/app.ts";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useThemeColors } from "@/theme";
 import { lightColors } from "@/theme/colors.ts";
 import FastImage from "@d11/react-native-fast-image";
@@ -14,6 +14,7 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import { MainStackRoutes } from "@/utils/enums/route-names.ts";
+import EmptyImage from "@/components/shared/EmptyImage.tsx";
 
 type Props = {
   article: Article;
@@ -25,6 +26,8 @@ const NewsCart: FC<Props> = ({ article, index }) => {
   const colors = useThemeColors();
   const styles = createStyles(colors);
 
+  const [imageError, setImageError] = useState(false);
+
   return (
     <TouchableOpacity
       onPress={() =>
@@ -35,7 +38,7 @@ const NewsCart: FC<Props> = ({ article, index }) => {
       }
     >
       <View style={[styles.container, index > 1 && { marginTop: 16 }]}>
-        {article?.fields?.thumbnail ? (
+        {article?.fields?.thumbnail && !imageError ? (
           <FastImage
             style={styles.image}
             source={{
@@ -43,30 +46,18 @@ const NewsCart: FC<Props> = ({ article, index }) => {
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.cover}
+            onError={() => setImageError(true)}
           />
         ) : (
-          <View
-            style={[
-              styles.image,
-              {
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: colors.grey200,
-              },
-            ]}
-          >
-            <InterText
-              weight={InterWeightEnum.Medium}
-              style={{
-                fontSize: 14,
-                color: colors.mainTextColor,
-                textAlign: "center",
-                lineHeight: 20,
-              }}
-            >
-              No Image Available
-            </InterText>
-          </View>
+          <EmptyImage
+            style={styles.image}
+            textStyle={{
+              fontSize: 14,
+              color: colors.mainTextColor,
+              textAlign: "center",
+              lineHeight: 20,
+            }}
+          />
         )}
         <View style={{ flexShrink: 1 }}>
           {article?.fields?.byline && (

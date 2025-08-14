@@ -8,6 +8,8 @@ export const lightColors = {
 
   blue400: "#1877F2",
   blue500: "#1A65B4",
+
+  white: "#fff"
 };
 
 export const darkColors = {
@@ -20,4 +22,6 @@ export const darkColors = {
 
   blue400: "#1877F2",
   blue500: "#1A65B4",
+
+  white: "#fff"
 };

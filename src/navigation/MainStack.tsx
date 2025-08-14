@@ -12,10 +12,13 @@ import { TouchableOpacity, View } from "react-native";
 import { useTheme } from "@/store/useTheme.ts";
 import { Article } from "@/utils/types/app.ts";
 import DetailScreen from "@/screens/DetailScreen.tsx";
+import { useBookmarks } from "@/store/useBookmarks.ts";
+import BookmarkScreen from "@/screens/BookmarkScreen.tsx";
 
 export type MainStackParamList = {
   [MainStackRoutes.HomeStack]: undefined;
   [MainStackRoutes.DetailStack]: { article: Article };
+  [MainStackRoutes.Bookmarks]: undefined;
 };
 
 const Stack = createNativeStackNavigator<MainStackParamList>();
@@ -23,6 +26,7 @@ const Stack = createNativeStackNavigator<MainStackParamList>();
 const MainStack: React.FC = () => {
   const toggleTheme = useTheme((state) => state.toggleTheme);
   const theme = useTheme((state) => state.theme);
+  const bookmarks = useBookmarks((state) => state.bookmarks);
 
   const colors = useThemeColors();
 
@@ -31,7 +35,7 @@ const MainStack: React.FC = () => {
       <Stack.Screen
         name={MainStackRoutes.HomeStack}
         component={HomeScreen}
-        options={() => ({
+        options={({ navigation, route: { params } }) => ({
           headerShown: true,
           headerShadowVisible: false,
           headerBackVisible: false,
@@ -43,9 +47,38 @@ const MainStack: React.FC = () => {
           ),
           headerRight: () => (
             <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 15 }}
+              style={{ flexDirection: "row", alignItems: "center", gap: 20 }}
             >
-              <BookmarkIcon color={colors.mainTextColor} />
+              <TouchableOpacity
+                style={{ position: "relative" }}
+                onPress={() => navigation.navigate(MainStackRoutes.Bookmarks)}
+              >
+                <BookmarkIcon color={colors.mainTextColor} />
+
+                {!!bookmarks.length && (
+                  <View
+                    style={{
+                      position: "absolute",
+                      top: -10,
+                      right: -15,
+                      minWidth: 30,
+                      height: 20,
+                      paddingHorizontal: 4,
+                      borderRadius: 100,
+                      backgroundColor: colors.blue500,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <InterText
+                      style={{ fontSize: 11, color: colors.white }}
+                      numberOfLines={1}
+                    >
+                      {bookmarks.length > 99 ? "99+" : String(bookmarks.length)}
+                    </InterText>
+                  </View>
+                )}
+              </TouchableOpacity>
               <TouchableOpacity onPress={toggleTheme}>
                 {theme === "dark" ? (
                   <DarkModeIcon width={22} height={22} />
@@ -78,9 +111,29 @@ const MainStack: React.FC = () => {
             borderBottomWidth: 0,
             backgroundColor: colors.background,
           },
-            headerTitleStyle: {
-                color: colors.mainTextColor,
-            },
+          headerTitleStyle: {
+            color: colors.mainTextColor,
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name={MainStackRoutes.Bookmarks}
+        component={BookmarkScreen}
+        options={() => ({
+          headerShown: true,
+          headerShadowVisible: false,
+          headerTitle: "Bookmark",
+          headerBackButtonDisplayMode: "minimal",
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
+            backgroundColor: colors.background,
+          },
+          headerTitleStyle: {
+            color: colors.mainTextColor,
+          },
         })}
       />
     </Stack.Navigator>

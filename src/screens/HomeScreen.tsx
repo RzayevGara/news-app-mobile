@@ -1,4 +1,10 @@
-import {ActivityIndicator, FlatList, RefreshControl, StyleSheet, View} from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  View,
+} from "react-native";
 import ScreenContainer from "@/components/views/ScreenContainer.tsx";
 import TrendingSlider from "@/components/home/TrendingSlider.tsx";
 import { lightColors } from "@/theme/colors.ts";
