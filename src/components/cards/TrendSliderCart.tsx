@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Article } from "@/utils/types/app.ts";
 import FastImage from "@d11/react-native-fast-image";
 import InterText from "@/components/texts/InterText.tsx";
@@ -8,81 +8,93 @@ import { InterWeightEnum } from "@/utils/enums/font.ts";
 import { lightColors } from "@/theme/colors.ts";
 import ClockIcon from "@/assets/icons/clock.svg";
 import { timeAgoFromString } from "@/utils/helper.ts";
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native";
+import { MainStackRoutes } from "@/utils/enums/route-names.ts";
 
-export default function TrendSliderCart({
-  item,
-}: {
-  item: Article;
-}) {
+export default function TrendSliderCart({ item }: { item: Article }) {
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const colors = useThemeColors();
   const styles = createStyles(colors);
 
   return (
-    <View style={styles.container}>
-      {item?.fields?.thumbnail ? (
-        <FastImage
-          style={styles.image}
-          source={{
-            uri: item?.fields?.thumbnail,
-            priority: FastImage.priority.normal,
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      ) : (
-        <View
-          style={[
-            styles.image,
-            {
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: colors.grey200,
-            },
-          ]}
-        >
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate(MainStackRoutes.MainStack, {
+          screen: MainStackRoutes.DetailStack,
+          params: { article: item },
+        })
+      }
+    >
+      <View style={styles.container}>
+        {item?.fields?.thumbnail ? (
+          <FastImage
+            style={styles.image}
+            source={{
+              uri: item?.fields?.thumbnail,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        ) : (
+          <View
+            style={[
+              styles.image,
+              {
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: colors.grey200,
+              },
+            ]}
+          >
+            <InterText
+              weight={InterWeightEnum.Medium}
+              style={{ fontSize: 18, color: colors.mainTextColor }}
+            >
+              No Image Available
+            </InterText>
+          </View>
+        )}
+        <View style={styles.textWrapper}>
+          {item?.fields?.byline && (
+            <InterText style={styles.authorText}>
+              {item?.fields?.byline}
+            </InterText>
+          )}
           <InterText
             weight={InterWeightEnum.Medium}
-            style={{ fontSize: 18, color: colors.mainTextColor }}
-          >
-            No Image Available
-          </InterText>
-        </View>
-      )}
-      <View style={styles.textWrapper}>
-        {item?.fields?.byline && (
-          <InterText style={styles.authorText}>
-            {item?.fields?.byline}
-          </InterText>
-        )}
-        <InterText
-          weight={InterWeightEnum.Medium}
-          style={styles.titleText}
-          numberOfLines={2}
-          ellipsizeMode="tail"
-        >
-          {item.webTitle}
-        </InterText>
-        <View style={styles.newsInfo}>
-          <InterText
-            weight={InterWeightEnum.Bold}
-            style={styles.sourceText}
+            style={styles.titleText}
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            {item.sectionName}
+            {item.webTitle}
           </InterText>
-          <View style={styles.timeInfo}>
-            <ClockIcon width={14} height={14} color={colors.mainTextColor} />
+          <View style={styles.newsInfo}>
             <InterText
+              weight={InterWeightEnum.Bold}
               style={styles.sourceText}
-              numberOfLines={2}
+              numberOfLines={1}
               ellipsizeMode="tail"
             >
-              {timeAgoFromString(item.webPublicationDate)}
+              {item.sectionName}
             </InterText>
+            <View style={styles.timeInfo}>
+              <ClockIcon width={14} height={14} color={colors.mainTextColor} />
+              <InterText
+                style={styles.timeText}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {timeAgoFromString(item.webPublicationDate)}
+              </InterText>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -107,6 +119,10 @@ function createStyles(colors: typeof lightColors) {
       fontSize: 16,
     },
     sourceText: {
+      fontSize: 14,
+      maxWidth: "50%",
+    },
+    timeText: {
       fontSize: 14,
     },
     newsInfo: {

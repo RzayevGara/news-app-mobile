@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
+import {ActivityIndicator, FlatList, RefreshControl, StyleSheet, View} from "react-native";
 import ScreenContainer from "@/components/views/ScreenContainer.tsx";
 import TrendingSlider from "@/components/home/TrendingSlider.tsx";
 import { lightColors } from "@/theme/colors.ts";
@@ -86,8 +86,15 @@ const HomeScreen = () => {
         ListHeaderComponent={<TrendingSlider isLoading={isLoading} />}
         ListFooterComponent={listFooter}
         style={styles.container}
-        refreshing={isRefreshing || isNewsRefreshing}
-        onRefresh={onRefresh}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing || isNewsRefreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.mainTextColor}
+            colors={[colors.mainTextColor]}
+            // progressBackgroundColor={colors.card}
+          />
+        }
         stickyHeaderIndices={[1]}
         showsVerticalScrollIndicator={false}
         onEndReachedThreshold={0.6}

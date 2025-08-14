@@ -77,7 +77,7 @@ export function useNewsList({ category, pageSize = 20 }: Params) {
     setTotal(0);
     setPage(1);
     fetchPage(1);
-    setIsLoadingMore(true);
+    setIsLoading(true);
 
     return () => {
       mountedRef.current = false;

@@ -10,11 +10,6 @@ import {
 import { useThemeColors } from "@/theme";
 import { lightColors } from "@/theme/colors.ts";
 import AnimatedDots from "@/components/pagination/AnimatedDots.tsx";
-import {
-  NavigationProp,
-  ParamListBase,
-  useNavigation,
-} from "@react-navigation/native";
 import { Article } from "@/utils/types/app.ts";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
@@ -36,7 +31,6 @@ const SwiperSlider: React.FC<SwiperSliderProps> = ({
 }) => {
   const colors = useThemeColors();
   const styles = createStyles(colors);
-  const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [dotIndex, setDotIndex] = useState<number>(0);

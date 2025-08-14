@@ -10,9 +10,12 @@ import DarkModeIcon from "@/assets/icons/dark-mode.svg";
 import LightModeIcon from "@/assets/icons/light-mode.svg";
 import { TouchableOpacity, View } from "react-native";
 import { useTheme } from "@/store/useTheme.ts";
+import { Article } from "@/utils/types/app.ts";
+import DetailScreen from "@/screens/DetailScreen.tsx";
 
 export type MainStackParamList = {
   [MainStackRoutes.HomeStack]: undefined;
+  [MainStackRoutes.DetailStack]: { article: Article };
 };
 
 const Stack = createNativeStackNavigator<MainStackParamList>();
@@ -28,7 +31,7 @@ const MainStack: React.FC = () => {
       <Stack.Screen
         name={MainStackRoutes.HomeStack}
         component={HomeScreen}
-        options={({ navigation, route: { params } }) => ({
+        options={() => ({
           headerShown: true,
           headerShadowVisible: false,
           headerBackVisible: false,
@@ -58,6 +61,26 @@ const MainStack: React.FC = () => {
             borderBottomWidth: 0,
             backgroundColor: colors.background,
           },
+        })}
+      />
+
+      <Stack.Screen
+        name={MainStackRoutes.DetailStack}
+        component={DetailScreen}
+        options={() => ({
+          headerShown: true,
+          headerShadowVisible: false,
+          headerTitle: "Oba News",
+          headerBackButtonDisplayMode: "minimal",
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
+            backgroundColor: colors.background,
+          },
+            headerTitleStyle: {
+                color: colors.mainTextColor,
+            },
         })}
       />
     </Stack.Navigator>
