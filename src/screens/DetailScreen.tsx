@@ -12,7 +12,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { MainStackParamList } from "@/navigation/MainStack.tsx";
 import { MainStackRoutes } from "@/utils/enums/route-names.ts";
 import { RootStackParamList } from "@/navigation/RootNavigator.tsx";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import InterText from "@/components/texts/InterText.tsx";
 import { lightColors } from "@/theme/colors.ts";
 import { useThemeColors } from "@/theme";
@@ -22,6 +22,7 @@ import BookmarkIcon from "@/assets/icons/bookmark.svg";
 import BookmarkCheckedIcon from "@/assets/icons/bookmark-checked.svg";
 import FastImage from "@d11/react-native-fast-image";
 import RenderHTML from "react-native-render-html";
+import { useBookmarks } from "@/store/useBookmarks.ts";
 
 type DetailProps = CompositeScreenProps<
   NativeStackScreenProps<MainStackParamList, MainStackRoutes.DetailStack>,
@@ -34,16 +35,28 @@ const DetailScreen: FC<DetailProps> = ({ route: { params } }) => {
   const styles = createStyles(colors);
   const { width } = useWindowDimensions();
 
+  const bookmarked = useBookmarks((state) => state.isBookmarked(article.id));
+  const addBookmark = useBookmarks((state) => state.addBookmark);
+  const removeBookmark = useBookmarks((state) => state.removeBookmarkById);
+
   const [ratio, setRatio] = useState(16 / 9);
 
   useEffect(() => {
     if (!article.fields?.thumbnail) return;
     Image.getSize(
       article.fields.thumbnail,
-      (w, h) => setRatio(w / h),
+      (width, height) => setRatio(width / height),
       () => setRatio(16 / 9)
     );
   }, [article]);
+
+  const onPressBookmark = useCallback(() => {
+    if (bookmarked) {
+      removeBookmark(article.id);
+    } else {
+      addBookmark(article);
+    }
+  }, [bookmarked, article, addBookmark, removeBookmark]);
 
   return (
     <ScreenContainer>
@@ -70,8 +83,12 @@ const DetailScreen: FC<DetailProps> = ({ route: { params } }) => {
             {timeAgoFromString(article.webPublicationDate)}
           </InterText>
         </View>
-        <Pressable>
-          <BookmarkIcon color={colors.mainTextColor} />
+        <Pressable onPress={onPressBookmark}>
+          {bookmarked ? (
+            <BookmarkCheckedIcon />
+          ) : (
+            <BookmarkIcon color={colors.mainTextColor} />
+          )}
         </Pressable>
       </View>
       <ScrollView
