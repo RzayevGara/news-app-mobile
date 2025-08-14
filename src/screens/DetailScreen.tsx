@@ -24,6 +24,7 @@ import FastImage from "@d11/react-native-fast-image";
 import RenderHTML from "react-native-render-html";
 import { useBookmarks } from "@/store/useBookmarks.ts";
 import EmptyImage from "@/components/shared/EmptyImage.tsx";
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 type DetailProps = CompositeScreenProps<
   NativeStackScreenProps<MainStackParamList, MainStackRoutes.DetailStack>,
@@ -59,6 +60,37 @@ const DetailScreen: FC<DetailProps> = ({ route: { params } }) => {
       addBookmark(article);
     }
   }, [bookmarked, article, addBookmark, removeBookmark]);
+
+  const renderImage = () => {
+    if (article?.fields?.thumbnail && !imageError) {
+      if (!ratio) {
+        return (
+          <SkeletonPlaceholder
+            backgroundColor={colors.skeletonBase}
+            highlightColor={colors.skeletonHighlights}
+          >
+            <SkeletonPlaceholder.Item
+              width="100%"
+              height={290}
+              borderRadius={8}
+            />
+          </SkeletonPlaceholder>
+        );
+      }
+      return (
+        <FastImage
+          style={{ width: "100%", aspectRatio: ratio, borderRadius: 8 }}
+          source={{
+            uri: article.fields.thumbnail,
+            priority: FastImage.priority.high,
+          }}
+          resizeMode={FastImage.resizeMode.contain}
+          onError={() => setImageError(true)}
+        />
+      );
+    }
+    return <EmptyImage />;
+  };
 
   return (
     <ScreenContainer>
@@ -104,20 +136,7 @@ const DetailScreen: FC<DetailProps> = ({ route: { params } }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-        {article?.fields?.thumbnail && !imageError ? (
-          <FastImage
-            style={{ width: "100%", aspectRatio: ratio, borderRadius: 8 }}
-            source={{
-              uri: article.fields.thumbnail,
-              priority: FastImage.priority.high,
-            }}
-            resizeMode={FastImage.resizeMode.contain}
-            onError={() => setImageError(true)}
-          />
-        ) : (
-          <EmptyImage />
-        )}
-
+        {renderImage()}
         <View style={{ marginTop: 16, gap: 10 }}>
           <InterText
             style={{ fontSize: 14, color: colors.secondTextColor }}
