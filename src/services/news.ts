@@ -5,20 +5,23 @@ import { NewsCategory } from "@/utils/enums/app.enum.ts";
 
 const GUARDIAN_API_KEY = NEWS_API_KEY;
 
-const guardian = axios.create({
+const news = axios.create({
   baseURL: "https://content.guardianapis.com",
   timeout: 12_000,
 });
 
-export async function getGuardianTrending(): Promise<Article[]> {
+export async function getTrendingNews(
+  controller: AbortController
+): Promise<Article[]> {
   try {
-    const { data } = await guardian.get(`/international`, {
+    const { data } = await news.get(`/international`, {
       params: {
         "show-most-viewed": true,
         "show-fields": "thumbnail,byline,body",
         "api-key": GUARDIAN_API_KEY,
         format: "json",
       },
+      signal: controller?.signal,
     });
 
     return data?.response?.mostViewed ?? [];
@@ -31,7 +34,7 @@ export async function getGuardianTrending(): Promise<Article[]> {
   }
 }
 
-export async function getGuardianBySection(opts: {
+export async function getNewsBySection(opts: {
   category?: NewsCategory;
   page?: number;
   pageSize?: number;
@@ -44,7 +47,7 @@ export async function getGuardianBySection(opts: {
 }> {
   const { category, page = 1, pageSize = 15, controller } = opts;
 
-  const { data } = await guardian.get("/search", {
+  const { data } = await news.get("/search", {
     params: {
       section: category,
       "order-by": "newest",

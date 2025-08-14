@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import NetInfo from "@react-native-community/netinfo";
 import { initialNews, useNews } from "@/store/useNews";
 import type { Article } from "@/utils/types/app";
-import { getGuardianBySection } from "@/services/guardian.ts";
+import { getNewsBySection } from "@/services/news.ts";
 import { NewsCategory } from "@/utils/enums/app.enum.ts";
 
 type Params = { category: NewsCategory; pageSize?: number };
@@ -13,7 +13,6 @@ export function useNewsList({ category, pageSize = 20 }: Params) {
   const articles = useNews((s) => s.articles);
 
   const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -39,7 +38,7 @@ export function useNewsList({ category, pageSize = 20 }: Params) {
           return;
         }
 
-        const res = await getGuardianBySection({
+        const res = await getNewsBySection({
           category,
           page: targetPage,
           pageSize,
@@ -47,9 +46,6 @@ export function useNewsList({ category, pageSize = 20 }: Params) {
         });
         if (!mountedRef.current) return;
 
-        const totalFromApi = res.total ?? 0;
-
-        setTotal(totalFromApi);
         setPage(targetPage);
 
         const incoming = (res.items || []) as Article[];
@@ -74,7 +70,6 @@ export function useNewsList({ category, pageSize = 20 }: Params) {
     controllerRef.current?.abort();
 
     setArticles(initialNews);
-    setTotal(0);
     setPage(1);
     fetchPage(1);
     setIsLoading(true);
@@ -94,7 +89,6 @@ export function useNewsList({ category, pageSize = 20 }: Params) {
   return {
     articles,
     page,
-    total,
     hasMore,
     isLoading,
     isRefreshing,
