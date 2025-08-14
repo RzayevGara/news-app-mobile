@@ -14,5 +14,6 @@ export type Article = {
     trailText?: string;
     byline?: string;
     shortUrl?: string;
+    body: string;
   };
 };
