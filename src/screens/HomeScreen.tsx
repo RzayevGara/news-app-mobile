@@ -86,7 +86,7 @@ const HomeScreen = () => {
         ListHeaderComponent={<TrendingSlider isLoading={isLoading} />}
         ListFooterComponent={listFooter}
         style={styles.container}
-        refreshing={isRefreshing}
+        refreshing={isRefreshing || isNewsRefreshing}
         onRefresh={onRefresh}
         stickyHeaderIndices={[1]}
         showsVerticalScrollIndicator={false}
