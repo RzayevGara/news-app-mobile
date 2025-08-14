@@ -20,11 +20,11 @@ const NewsCart: FC<Props> = ({ article, index }) => {
 
   return (
     <View style={[styles.container, index > 1 && { marginTop: 16 }]}>
-      {article?.urlToImage ? (
+      {article?.fields?.thumbnail ? (
         <FastImage
           style={styles.image}
           source={{
-            uri: article.urlToImage,
+            uri: article.fields.thumbnail,
             priority: FastImage.priority.normal,
           }}
           resizeMode={FastImage.resizeMode.cover}
@@ -54,13 +54,13 @@ const NewsCart: FC<Props> = ({ article, index }) => {
         </View>
       )}
       <View style={{ flexShrink: 1 }}>
-        {article?.author && (
+        {article?.fields?.byline && (
           <InterText
             style={styles.authorText}
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            {article.author}
+            {article.fields.byline}
           </InterText>
         )}
         <View style={{ justifyContent: "space-between", flex: 1 }}>
@@ -69,7 +69,7 @@ const NewsCart: FC<Props> = ({ article, index }) => {
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            {article.title}
+            {article.webTitle}
           </InterText>
           <View style={styles.newsInfo}>
             <InterText
@@ -78,7 +78,7 @@ const NewsCart: FC<Props> = ({ article, index }) => {
               numberOfLines={1}
               ellipsizeMode="tail"
             >
-              {article.source.name}
+              {article.sectionName}
             </InterText>
             <View style={styles.timeInfo}>
               <ClockIcon width={14} height={14} color={colors.mainTextColor} />
@@ -87,7 +87,7 @@ const NewsCart: FC<Props> = ({ article, index }) => {
                 numberOfLines={1}
                 ellipsizeMode="tail"
               >
-                {timeAgoFromString(article.publishedAt)}
+                {timeAgoFromString(article.webPublicationDate)}
               </InterText>
             </View>
           </View>

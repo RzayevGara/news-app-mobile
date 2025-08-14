@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import {
-  ActivityIndicator,
   Dimensions,
   StyleSheet,
   View,
@@ -121,7 +120,7 @@ const SwiperSlider: React.FC<SwiperSliderProps> = ({
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item) => item.id}
           initialScrollIndex={activeIndex || 0}
           onMomentumScrollEnd={handleMomentumScrollEnd}
           onScroll={handleScroll}

@@ -2,12 +2,17 @@ import { NewsType } from "@/utils/enums/app.enum.ts";
 
 export type Article = {
   type: NewsType;
-  author: string;
-  title: string;
-  description: string | null;
-  urlToImage?: string;
-  url: string;
-  publishedAt: string;
-  content: string;
-  source: { id: string | null; name: string };
+  id: string;
+  sectionId?: string;
+  sectionName?: string;
+  webPublicationDate: string;
+  webTitle: string;
+  webUrl: string;
+  apiUrl: string;
+  fields?: {
+    thumbnail?: string;
+    trailText?: string;
+    byline?: string;
+    shortUrl?: string;
+  };
 };

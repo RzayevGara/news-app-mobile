@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
-import { NewsCategory } from "@/services/news.ts";
 import { useThemeColors } from "@/theme";
 import { lightColors } from "@/theme/colors.ts";
 import InterText from "@/components/texts/InterText.tsx";
 import { InterWeightEnum } from "@/utils/enums/font.ts";
+import { NewsCategory } from "@/utils/enums/app.enum.ts";
 
 type Props = {
   activeCat: NewsCategory;

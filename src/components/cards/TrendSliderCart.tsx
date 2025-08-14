@@ -9,16 +9,23 @@ import { lightColors } from "@/theme/colors.ts";
 import ClockIcon from "@/assets/icons/clock.svg";
 import { timeAgoFromString } from "@/utils/helper.ts";
 
-export default function TrendSliderCart({ item }: { item: Article }) {
+export default function TrendSliderCart({
+  item,
+}: {
+  item: Article;
+}) {
   const colors = useThemeColors();
   const styles = createStyles(colors);
 
   return (
     <View style={styles.container}>
-      {item?.urlToImage ? (
+      {item?.fields?.thumbnail ? (
         <FastImage
           style={styles.image}
-          source={{ uri: item.urlToImage, priority: FastImage.priority.normal }}
+          source={{
+            uri: item?.fields?.thumbnail,
+            priority: FastImage.priority.normal,
+          }}
           resizeMode={FastImage.resizeMode.cover}
         />
       ) : (
@@ -41,8 +48,10 @@ export default function TrendSliderCart({ item }: { item: Article }) {
         </View>
       )}
       <View style={styles.textWrapper}>
-        {item?.author && (
-          <InterText style={styles.authorText}>{item.author}</InterText>
+        {item?.fields?.byline && (
+          <InterText style={styles.authorText}>
+            {item?.fields?.byline}
+          </InterText>
         )}
         <InterText
           weight={InterWeightEnum.Medium}
@@ -50,7 +59,7 @@ export default function TrendSliderCart({ item }: { item: Article }) {
           numberOfLines={2}
           ellipsizeMode="tail"
         >
-          {item.title}
+          {item.webTitle}
         </InterText>
         <View style={styles.newsInfo}>
           <InterText
@@ -59,7 +68,7 @@ export default function TrendSliderCart({ item }: { item: Article }) {
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            {item.source.name}
+            {item.sectionName}
           </InterText>
           <View style={styles.timeInfo}>
             <ClockIcon width={14} height={14} color={colors.mainTextColor} />
@@ -68,7 +77,7 @@ export default function TrendSliderCart({ item }: { item: Article }) {
               numberOfLines={2}
               ellipsizeMode="tail"
             >
-              {timeAgoFromString(item.publishedAt)}
+              {timeAgoFromString(item.webPublicationDate)}
             </InterText>
           </View>
         </View>

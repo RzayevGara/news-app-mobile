@@ -5,10 +5,9 @@ import { lightColors } from "@/theme/colors.ts";
 import { useThemeColors } from "@/theme";
 import { useTrendingNews } from "@/hooks/useTrendingNews.ts";
 import React, { useCallback, useState } from "react";
-import { NewsCategory } from "@/services/news.ts";
 import { Article } from "@/utils/types/app.ts";
 import NewsCategoryBar from "@/components/home/NewsCategoryBar.tsx";
-import { NewsType } from "@/utils/enums/app.enum.ts";
+import { NewsCategory, NewsType } from "@/utils/enums/app.enum.ts";
 import { useNewsList } from "@/hooks/useNewsList.ts";
 import NewsCart from "@/components/cards/NewsCart.tsx";
 import InterText from "@/components/texts/InterText.tsx";
@@ -81,13 +80,13 @@ const HomeScreen = () => {
       <FlatList
         data={articles}
         renderItem={renderItem}
-        keyExtractor={(item, index) =>
-          item.type === NewsType.category ? NewsType.category : index.toString()
+        keyExtractor={(item) =>
+          item.type === NewsType.category ? NewsType.category : item.id
         }
         ListHeaderComponent={<TrendingSlider isLoading={isLoading} />}
         ListFooterComponent={listFooter}
         style={styles.container}
-        refreshing={isRefreshing || isNewsRefreshing}
+        refreshing={isRefreshing}
         onRefresh={onRefresh}
         stickyHeaderIndices={[1]}
         showsVerticalScrollIndicator={false}

@@ -16,13 +16,11 @@ type State = {
 export const initialNews: Article[] = [
   {
     type: NewsType.category,
-    author: "",
-    title: "",
-    description: "",
-    publishedAt: "",
-    content: "",
-    url: "",
-    source: { id: null, name: "" },
+    id: "",
+    webPublicationDate: "",
+    webTitle: "",
+    webUrl: "",
+    apiUrl: "",
   },
 ];
 

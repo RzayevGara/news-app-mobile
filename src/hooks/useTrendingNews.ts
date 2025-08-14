@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import NetInfo from "@react-native-community/netinfo";
-import { getNews } from "@/services/news";
 import { useNews } from "@/store/useNews";
+import { getGuardianTrending } from "@/services/guardian.ts";
 
 export function useTrendingNews() {
   const setTrends = useNews((s) => s.setTrends);
@@ -18,9 +18,9 @@ export function useTrendingNews() {
         const net = await NetInfo.fetch();
         if (!net.isConnected) return;
 
-        const res = await getNews({ page: 1, pageSize: 10 });
+        const res = await getGuardianTrending();
         if (!mountedRef.current) return;
-        setTrends(res.articles);
+        setTrends(res);
       } finally {
         if (!mountedRef.current) return;
         refreshing ? setIsRefreshing(false) : setIsLoading(false);

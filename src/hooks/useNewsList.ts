@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import NetInfo from "@react-native-community/netinfo";
-import { getNews, NewsCategory } from "@/services/news";
 import { initialNews, useNews } from "@/store/useNews";
 import type { Article } from "@/utils/types/app";
+import { getGuardianBySection } from "@/services/guardian.ts";
+import { NewsCategory } from "@/utils/enums/app.enum.ts";
 
 type Params = { category: NewsCategory; pageSize?: number };
 
@@ -35,7 +36,7 @@ export function useNewsList({ category, pageSize = 20 }: Params) {
         const net = await NetInfo.fetch();
         if (!net.isConnected) return;
 
-        const res = await getNews({
+        const res = await getGuardianBySection({
           category,
           page: targetPage,
           pageSize,
@@ -43,13 +44,13 @@ export function useNewsList({ category, pageSize = 20 }: Params) {
         });
         if (!mountedRef.current) return;
 
-        const totalFromApi = res.totalResults ?? 0;
+        const totalFromApi = res.total ?? 0;
 
         setTotal(totalFromApi);
         setPage(targetPage);
 
-        const incoming = (res.articles || []) as Article[];
-        setHasMore(incoming.length > 0);
+        const incoming = (res.items || []) as Article[];
+        setHasMore(res.currentPage !== res.pages);
 
         if (append) {
           appendArticles(incoming);
