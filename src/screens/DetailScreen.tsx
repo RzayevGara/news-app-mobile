@@ -112,6 +112,7 @@ const DetailScreen: FC<DetailProps> = ({ route: { params } }) => {
               priority: FastImage.priority.high,
             }}
             resizeMode={FastImage.resizeMode.contain}
+            onError={() => setImageError(true)}
           />
         ) : (
           <EmptyImage />

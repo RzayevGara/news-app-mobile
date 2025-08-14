@@ -40,7 +40,7 @@ const HomeScreen = () => {
   } = useNewsList({ category: activeCat, pageSize: 7 });
 
   const renderItem = ({ item, index }: { item: Article; index: number }) => {
-    if (index === 0 && !isNewsLoading) {
+    if (index === 0 && isNewsLoading) {
       return (
         <View style={{ backgroundColor: colors.background }}>
           <NewsCategoryBar

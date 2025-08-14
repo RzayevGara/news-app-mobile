@@ -10,13 +10,13 @@ const CartSkeletonAnimation = () => {
   const highlight = colors.skeletonHighlights;
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background }}>
+    <View>
       <SkeletonPlaceholder backgroundColor={base} highlightColor={highlight}>
         <SkeletonPlaceholder.Item>
           {Array.from({ length: 5 }).map((_, i) => (
             <SkeletonPlaceholder.Item
               style={{
-                marginTop: i > 0 ? 25 : 12,
+                marginTop: i > 0 ? 25 : 6,
                 flexDirection: "row",
                 gap: 10,
                 paddingHorizontal: 6,

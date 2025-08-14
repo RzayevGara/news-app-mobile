@@ -63,7 +63,10 @@ const SwiperSlider: React.FC<SwiperSliderProps> = ({
           marginTop: 16,
         }}
       >
-        <SkeletonPlaceholder>
+        <SkeletonPlaceholder
+          backgroundColor={colors.skeletonBase}
+          highlightColor={colors.skeletonHighlights}
+        >
           <SkeletonPlaceholder.Item
             width="100%"
             height={180}

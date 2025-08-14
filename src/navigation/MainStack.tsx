@@ -1,5 +1,8 @@
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from "@react-navigation/native-stack";
 import { MainStackRoutes } from "@/utils/enums/route-names.ts";
 import { useThemeColors } from "@/theme";
 import HomeScreen from "@/screens/HomeScreen.tsx";
@@ -38,7 +41,14 @@ const MainStack: React.FC = () => {
       <Stack.Screen
         name={MainStackRoutes.HomeStack}
         component={HomeScreen}
-        options={({ navigation, route: { params } }) => ({
+        options={({
+          navigation,
+        }: {
+          navigation: NativeStackNavigationProp<
+            MainStackParamList,
+            MainStackRoutes.HomeStack
+          >;
+        }) => ({
           headerShown: true,
           headerShadowVisible: false,
           headerBackVisible: false,
@@ -50,7 +60,7 @@ const MainStack: React.FC = () => {
           ),
           headerRight: () => (
             <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 20 }}
+              style={{ flexDirection: "row", alignItems: "center", gap: 15 }}
             >
               <TouchableOpacity
                 style={{ position: "relative" }}
@@ -65,7 +75,11 @@ const MainStack: React.FC = () => {
                     position: "relative",
                   }}
                 >
-                  <BookmarkIcon color={colors.mainTextColor} />
+                  <BookmarkIcon
+                    color={colors.mainTextColor}
+                    width={24}
+                    height={24}
+                  />
 
                   {!!bookmarks.length && (
                     <View
