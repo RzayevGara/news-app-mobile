@@ -9,9 +9,10 @@ import { NewsCategory } from "@/utils/enums/app.enum.ts";
 type Props = {
   activeCat: NewsCategory;
   onChange: (activeCat: NewsCategory) => void;
+  isNewsLoading: boolean;
 };
 
-const NewsCategoryBar: FC<Props> = ({ activeCat, onChange }) => {
+const NewsCategoryBar: FC<Props> = ({ activeCat, onChange, isNewsLoading }) => {
   const colors = useThemeColors();
   const styles = createStyles(colors);
 
@@ -28,7 +29,11 @@ const NewsCategoryBar: FC<Props> = ({ activeCat, onChange }) => {
         {Object.values(NewsCategory).map((category) => {
           const selected = activeCat === category;
           return (
-            <Pressable key={category} onPress={() => onChange(category)}>
+            <Pressable
+              key={category}
+              onPress={() => onChange(category)}
+              disabled={isNewsLoading}
+            >
               <InterText
                 style={[
                   styles.chip,

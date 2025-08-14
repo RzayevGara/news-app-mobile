@@ -40,11 +40,26 @@ const HomeScreen = () => {
   } = useNewsList({ category: activeCat, pageSize: 7 });
 
   const renderItem = ({ item, index }: { item: Article; index: number }) => {
-    if (index === 0 && isNewsLoading) {
-      return <CartSkeletonAnimation />;
+    if (index === 0 && !isNewsLoading) {
+      return (
+        <View style={{ backgroundColor: colors.background }}>
+          <NewsCategoryBar
+            activeCat={activeCat}
+            onChange={setActiveCat}
+            isNewsLoading={isNewsLoading}
+          />
+          <CartSkeletonAnimation />
+        </View>
+      );
     }
-    if (item.type === NewsType.category && !isNewsLoading) {
-      return <NewsCategoryBar activeCat={activeCat} onChange={setActiveCat} />;
+    if (item.type === NewsType.category) {
+      return (
+        <NewsCategoryBar
+          activeCat={activeCat}
+          onChange={setActiveCat}
+          isNewsLoading={isNewsLoading}
+        />
+      );
     } else if (!isNewsLoading) {
       return <NewsCart article={item} index={index} />;
     } else {
@@ -92,13 +107,14 @@ const HomeScreen = () => {
         ListHeaderComponent={<TrendingSlider isLoading={isLoading} />}
         ListFooterComponent={listFooter}
         style={styles.container}
+        contentContainerStyle={{ backgroundColor: colors.background }}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing || isNewsRefreshing}
             onRefresh={onRefresh}
             tintColor={colors.mainTextColor}
             colors={[colors.mainTextColor]}
-            // progressBackgroundColor={colors.card}
+            progressBackgroundColor={colors.background}
           />
         }
         stickyHeaderIndices={[1]}
@@ -118,7 +134,7 @@ export default HomeScreen;
 function createStyles(colors: typeof lightColors) {
   return StyleSheet.create({
     container: {
-      paddingHorizontal: 16,
+      marginHorizontal: 16,
       marginTop: 10,
     },
     footer: {

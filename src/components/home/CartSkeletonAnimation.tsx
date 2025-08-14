@@ -1,34 +1,26 @@
-import { View } from "react-native";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import React from "react";
+import { useThemeColors } from "@/theme";
+import { View } from "react-native";
 
 const CartSkeletonAnimation = () => {
+  const colors = useThemeColors();
+
+  const base = colors.skeletonBase;
+  const highlight = colors.skeletonHighlights;
+
   return (
-    <View>
-      <SkeletonPlaceholder>
-        <SkeletonPlaceholder.Item width={100} height={20} borderRadius={4} />
-        <View
-          style={{
-            marginTop: 15,
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      <SkeletonPlaceholder backgroundColor={base} highlightColor={highlight}>
+        <SkeletonPlaceholder.Item>
           {Array.from({ length: 5 }).map((_, i) => (
-            <View style={{ paddingHorizontal: 5, width: "20%" }} key={i}>
-              <SkeletonPlaceholder.Item
-                width="100%"
-                height={20}
-                borderRadius={4}
-              />
-            </View>
-          ))}
-        </View>
-        <View>
-          {Array.from({ length: 5 }).map((_, i) => (
-            <View
-              style={{ marginTop: 30, flexDirection: "row", gap: 10 }}
+            <SkeletonPlaceholder.Item
+              style={{
+                marginTop: i > 0 ? 25 : 12,
+                flexDirection: "row",
+                gap: 10,
+                paddingHorizontal: 6,
+              }}
               key={i}
             >
               <SkeletonPlaceholder.Item
@@ -36,13 +28,13 @@ const CartSkeletonAnimation = () => {
                 height={96}
                 borderRadius={8}
               />
-              <View style={{ flex: 1 }}>
+              <SkeletonPlaceholder.Item style={{ flex: 1 }}>
                 <SkeletonPlaceholder.Item
                   width="30%"
                   height={20}
                   borderRadius={4}
                 />
-                <View
+                <SkeletonPlaceholder.Item
                   style={{
                     marginTop: 10,
                     justifyContent: "space-between",
@@ -55,7 +47,9 @@ const CartSkeletonAnimation = () => {
                     borderRadius={4}
                   />
 
-                  <View style={{ flexDirection: "row", gap: 10 }}>
+                  <SkeletonPlaceholder.Item
+                    style={{ flexDirection: "row", gap: 10 }}
+                  >
                     <SkeletonPlaceholder.Item
                       width={50}
                       height={20}
@@ -72,12 +66,12 @@ const CartSkeletonAnimation = () => {
                       height={20}
                       borderRadius={4}
                     />
-                  </View>
-                </View>
-              </View>
-            </View>
+                  </SkeletonPlaceholder.Item>
+                </SkeletonPlaceholder.Item>
+              </SkeletonPlaceholder.Item>
+            </SkeletonPlaceholder.Item>
           ))}
-        </View>
+        </SkeletonPlaceholder.Item>
       </SkeletonPlaceholder>
     </View>
   );

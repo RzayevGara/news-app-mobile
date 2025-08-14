@@ -111,7 +111,7 @@ const DetailScreen: FC<DetailProps> = ({ route: { params } }) => {
               uri: article.fields.thumbnail,
               priority: FastImage.priority.high,
             }}
-            resizeMode={FastImage.resizeMode.cover}
+            resizeMode={FastImage.resizeMode.contain}
           />
         ) : (
           <EmptyImage />

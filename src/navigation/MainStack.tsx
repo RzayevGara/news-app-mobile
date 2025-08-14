@@ -31,7 +31,10 @@ const MainStack: React.FC = () => {
   const colors = useThemeColors();
 
   return (
-    <Stack.Navigator initialRouteName={MainStackRoutes.HomeStack}>
+    <Stack.Navigator
+      initialRouteName={MainStackRoutes.HomeStack}
+      screenOptions={{ contentStyle: { backgroundColor: colors.background } }}
+    >
       <Stack.Screen
         name={MainStackRoutes.HomeStack}
         component={HomeScreen}
@@ -53,31 +56,41 @@ const MainStack: React.FC = () => {
                 style={{ position: "relative" }}
                 onPress={() => navigation.navigate(MainStackRoutes.Bookmarks)}
               >
-                <BookmarkIcon color={colors.mainTextColor} />
+                <View
+                  style={{
+                    width: 40,
+                    height: 40,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "relative",
+                  }}
+                >
+                  <BookmarkIcon color={colors.mainTextColor} />
 
-                {!!bookmarks.length && (
-                  <View
-                    style={{
-                      position: "absolute",
-                      top: -10,
-                      right: -15,
-                      minWidth: 30,
-                      height: 20,
-                      paddingHorizontal: 4,
-                      borderRadius: 100,
-                      backgroundColor: colors.blue500,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <InterText
-                      style={{ fontSize: 11, color: colors.white }}
-                      numberOfLines={1}
+                  {!!bookmarks.length && (
+                    <View
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        minWidth: 26,
+                        height: 18,
+                        paddingHorizontal: 6,
+                        borderRadius: 12,
+                        backgroundColor: colors.blue500,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 10,
+                      }}
                     >
-                      {bookmarks.length > 99 ? "99+" : String(bookmarks.length)}
-                    </InterText>
-                  </View>
-                )}
+                      <InterText style={{ fontSize: 11, color: colors.white }}>
+                        {bookmarks.length > 99
+                          ? "99+"
+                          : String(bookmarks.length)}
+                      </InterText>
+                    </View>
+                  )}
+                </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={toggleTheme}>
                 {theme === "dark" ? (
@@ -114,6 +127,7 @@ const MainStack: React.FC = () => {
           headerTitleStyle: {
             color: colors.mainTextColor,
           },
+          headerTintColor: colors.mainTextColor,
         })}
       />
 
@@ -134,6 +148,7 @@ const MainStack: React.FC = () => {
           headerTitleStyle: {
             color: colors.mainTextColor,
           },
+          headerTintColor: colors.mainTextColor,
         })}
       />
     </Stack.Navigator>
